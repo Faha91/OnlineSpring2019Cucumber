@@ -1,6 +1,7 @@
 package com.vytrack.utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,7 +10,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+
+import java.net.URL;
 
 public class Driver {
     private static WebDriver driver;
@@ -17,7 +22,7 @@ public class Driver {
     private Driver() {
     }
 
-    public synchronized static WebDriver getDriver(String browser) {
+    public synchronized static WebDriver getDriver(String browser)  {
         // String browser ==>  it originally comes from xml file to test base class, from test base it comes here
         if (driver == null) {
             // first we check if the value from xml file is null or not
@@ -62,6 +67,16 @@ public class Driver {
                     WebDriverManager.getInstance(SafariDriver.class).setup();
                     driver = new SafariDriver();
                     break;
+                case "remotechrome":
+                    DesiredCapabilities capabilities = new DesiredCapabilities().chrome();
+                    capabilities.setPlatform(Platform.ANY);
+                    try {
+                        driver = new RemoteWebDriver(new URL("http://172.31.98.180:4444/wd/hub"), capabilities);
+                    } catch (Exception e){
+                        System.out.println("Remote Driver Issues");
+                    }
+                    break;
+
                 default:
                     throw new RuntimeException("Illegal browser type!");
             }

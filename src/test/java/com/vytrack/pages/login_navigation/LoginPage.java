@@ -8,6 +8,8 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class LoginPage {
     public LoginPage(){PageFactory.initElements(Driver.getDriver(), this);}
 
@@ -58,5 +60,10 @@ public class LoginPage {
         if(!rememberMeElement.isSelected()){
             rememberMeElement.click();
         }
+    }
+
+    public void goToLandingPage(){
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"+ ConfigurationReader.getProperty("environment")));
+
     }
 }
