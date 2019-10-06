@@ -48,13 +48,9 @@ public class LoginStepDefinitions {
   public static void main (String ... args) {
   }
 
-<<<<<<< Updated upstream
-int a  = 1000000;
+boolean a = true; 
 
-=======
-int a  = 100;
-String name;
->>>>>>> Stashed changes
+
     }
 
 
